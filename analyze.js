@@ -247,10 +247,10 @@ async function simplify_cam_data(raw_camera_data){
     let last_time = Date.now()
     const format_time = (ms_delta)=>{
         let time = {
-            ms: Math.round(ms_delta % 1000),
-            sec: Math.round((ms_delta / 1_000) % 60),
-            min: Math.round((ms_delta / 60_000) % 60),
-            hours: Math.round((ms_delta / 3_600_000))
+            ms: Math.floor(ms_delta % 1000),
+            sec: Math.floor((ms_delta / 1_000) % 60),
+            min: Math.floor((ms_delta / 60_000) % 60),
+            hours: Math.floor((ms_delta / 3_600_000))
         }
         const pad = (number, padding)=>{
             let len = number.toString().length
