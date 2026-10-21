@@ -69,7 +69,7 @@ async function get_raw_camera_data(){
     let camera_data
     let setLoaded
     let loaded = new Promise(res=>setLoaded=res)
-    readFile("source_data\\cameras.geojson", "utf-8", (err, data) => {
+    readFile("source_data/cameras.geojson", "utf-8", (err, data) => {
         camera_data = JSON.parse(data)
         setLoaded()
     })
@@ -82,7 +82,7 @@ async function get_camera_data(){
     let camera_data
     let setLoaded
     let loaded = new Promise(res=>setLoaded=res)
-    readFile("synth_data\\simple_data.json", "utf-8", (err, data) => {
+    readFile("synth_data/simple_data.json", "utf-8", (err, data) => {
         camera_data = JSON.parse(data)
         setLoaded()
     })
@@ -95,7 +95,7 @@ async function get_states(){
     let states = []
     let setLoaded
     let loaded = new Promise(res=>setLoaded=res)
-    readFile("source_data\\states.txt", "utf-8", (err, data)=>{
+    readFile("source_data/states.txt", "utf-8", (err, data)=>{
         states = data.replaceAll("\r","").split("\n")
         setLoaded()
     })
@@ -138,7 +138,7 @@ async function get_pop_data(){
     let setLoaded
     let loaded = new Promise(res=>setLoaded=res)
 
-    readFile("source_data\\NST-EST2025-ALLDATA.csv", "utf-8", (err, data)=>{
+    readFile("source_data/NST-EST2025-ALLDATA.csv", "utf-8", (err, data)=>{
         let lines = data.split("\n")
         let pop_table = lines.map(e=>e.split(","))
         pop_table.shift()
@@ -200,7 +200,7 @@ async function dump_table(filename, data, headers=undefined){
     let table = headers ? [headers, ...data] : data
     let lines = table.map(row => row.join(","))
     let output = lines.join("\n")
-    writeFile("generated_tables\\"+filename, output, (err)=>console.error)
+    writeFile("generated_tables/"+filename, output, (err)=>console.error)
     dumped_tables.push(filename)
 }
 
@@ -219,7 +219,7 @@ async function combine_tables(filename, table_files){
     }
     for (let table_file of table_files){
         // load sheet data from csv
-        const sheet = await wbk.csv.readFile("generated_tables\\"+table_file, {sheetName: format_name(table_file)})
+        const sheet = await wbk.csv.readFile("generated_tables/"+table_file, {sheetName: format_name(table_file)})
         sheet.columns.forEach((column, index) => {
             let max_length = 0;
             
@@ -236,7 +236,7 @@ async function combine_tables(filename, table_files){
             column.width = calc_width
         })
     }
-    wbk.xlsx.writeFile("generated_tables\\"+filename)
+    wbk.xlsx.writeFile("generated_tables/"+filename)
 }
 
 async function simplify_cam_data(raw_camera_data){
@@ -292,13 +292,13 @@ async function simplify_cam_data(raw_camera_data){
     }
 
     cursor.reset()
-    writeFile("synth_data\\simple_data.json", JSON.stringify(simple_data), err=>console.error)
+    writeFile("synth_data/simple_data.json", JSON.stringify(simple_data), err=>console.error)
 }
 
 await download_sources()
 await assure_structure()
 
-if (!existsSync("synth_data\\simple_data.json")){
+if (!existsSync("synth_data/simple_data.json")){
     console.info("creating simplified data\nthis may take a while")
     let cam_data = await get_raw_camera_data()
     await simplify_cam_data(cam_data)
