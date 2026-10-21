@@ -1,8 +1,12 @@
 # running script
 the package manager used for this project is pnpm. use `pnpm install` to install the dependencies.
 
-for running the script. `LAT` and `LON` must be set to a latitude and longitude respectivly. running `node analyze.js` is sufficient for doing all the analysis.
+for running the script. running `node analyze.js` is sufficient for doing all the analysis.
 the source data is automatically downloaded. 
+
+## optional environment variables 
+`LAT` and `LON` can be set to a latitude and longitude respectivly.
+`LOCATION_DEFER` can be used to ignore the `LAT` and `LON` environment variables when running.
 
 # data
 
