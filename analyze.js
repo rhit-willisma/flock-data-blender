@@ -244,6 +244,20 @@ async function simplify_cam_data(raw_camera_data){
     let cam_count = raw_camera_data.features.length
     let index = 0
     let bad_data_count = 0
+    let last_time = Date.now()
+    const format_time = (ms_delta)=>{
+        let time = {
+            ms: Math.round(ms_delta % 1000),
+            sec: Math.round((ms_delta / 1_000) % 60),
+            min: Math.round((ms_delta / 60_000) % 60),
+            hours: Math.round((ms_delta / 3_600_000))
+        }
+        const pad = (number, padding)=>{
+            let len = number.toString().length
+            return (len < padding ? "0".repeat(padding-len) : "") + number.toString()
+        }
+        return `${time.hours}:${pad(time.min, 2)}:${pad(time.sec, 2)}.${pad(time.ms, 3)}`
+    }
     cursor.write("bad data: 0\nprocess is 0% complete\n")
     while (index <= cam_count){
         let camera = raw_camera_data.features[index]
@@ -284,9 +298,15 @@ async function simplify_cam_data(raw_camera_data){
         
         index++
         if (index % 1000 == 0) {
+            let time = Date.now() - last_time
+            let remaining = cam_count-index
+            let est_time = remaining/1000 * time
+            last_time = Date.now()
+
             cursor
                 .up()
-                .write(`process is ${Math.floor(index/cam_count*100)}% complete\n`)
+                .eraseLine()
+                .write(`process is ${Math.floor(index/cam_count*100)}% complete (eta: ${format_time(est_time)})\n`)
             // console.info(`passing entry ${index} of ${cam_count}`)
         }
     }
