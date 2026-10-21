@@ -4,6 +4,9 @@ import { finished } from "node:stream/promises";
 import { lookUpRaw } from "geojson-places";
 import ExcelJS from "exceljs"
 import ansi from "ansi"
+import { get_location_or_ask } from "./geohelper/geohelper.js";
+
+process.loadEnvFile()
 
 const cursor = ansi(process.stdout)
 const PI = 3.14159
@@ -99,13 +102,13 @@ async function get_states(){
     return states
 }
 
-function get_count(cam_data, radius = 5){
+async function get_count(cam_data, location, radius = 5){
     function deg_to_rad(deg){
         return deg/180 * PI 
     }
 
-    const target_lat = deg_to_rad(process.env.LAT)
-    const target_lon = deg_to_rad(-process.env.LON) // longitude must be positive
+    const target_lat = location.lat
+    const target_lon = -location.lon // longitude must be positive
     const check_radius = radius
 
     let count = 0
@@ -231,7 +234,6 @@ async function combine_tables(filename, table_files){
             column.width = calc_width
         })
     }
-
     wbk.xlsx.writeFile("generated_tables\\"+filename)
 }
 
@@ -306,8 +308,9 @@ let cam_data = await get_camera_data()
 
 console.log("getting camera counts at different radii")
 let count_table = []
+const gps_location = await get_location_or_ask()
 for (let i = 5, j = 0; i <= 25; i+=5, j++){
-    count_table[j] = [i, get_count(cam_data, i)]
+    count_table[j] = [i, get_count(cam_data, gps_location, i)]
 }
 
 console.info("writing table")
