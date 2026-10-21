@@ -1,3 +1,9 @@
+# running script
+the package manager used for this project is pnpm. use `pnpm install` to install the dependencies.
+
+for running the script. `LAT` and `LON` must be set to a latitude and longitude respectivly. running `node analyze.js` is sufficient for doing all the analysis.
+the source data is automatically downloaded. 
+
 # data
 
 ## sources
@@ -8,9 +14,3 @@
 - [geojson places library](https://github.com/rapomon/geojson-places)
     - [polygon data](https://www.naturalearthdata.com/features/)
 - [state list](https://textlists.info/geography/list-of-u-s-states/)
-
-## synthesized data
-- [simplified camera geojson data](simple_data.json)
-- tables
-    - [camera count per mile of distance from rose hulman](dump/count_per_mile_radius.csv)
-    - [inverse per capita camera data](dump/per_capita_cameras.csv)
