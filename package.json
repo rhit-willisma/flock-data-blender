@@ -1,0 +1,26 @@
+{
+  "name": "New folder",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "MIT",
+  "devEngines": {
+    "packageManager": {
+      "name": "pnpm",
+      "version": "11.24.0",
+      "onFail": "download"
+    }
+  },
+  "packageManager": "pnpm@11.24.0",
+  "type": "module",
+  "dependencies": {
+    "ansi": "^0.3.1",
+    "exceljs": "^4.4.0",
+    "geojson-places": "^1.0.8"
+  }
+}

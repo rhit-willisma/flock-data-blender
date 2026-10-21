@@ -1,0 +1,5 @@
+node_modules
+generated_tables
+source_data
+synth_data
+.env
