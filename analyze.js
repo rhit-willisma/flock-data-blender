@@ -6,7 +6,9 @@ import ExcelJS from "exceljs"
 import ansi from "ansi"
 import { get_location_or_ask } from "./geohelper/geohelper.js";
 
-process.loadEnvFile()
+try {
+    process.loadEnvFile()
+} catch {}
 
 const cursor = ansi(process.stdout)
 const PI = 3.14159
