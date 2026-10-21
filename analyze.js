@@ -292,7 +292,13 @@ async function simplify_cam_data(raw_camera_data){
     }
 
     cursor.reset()
-    writeFile("synth_data/simple_data.json", JSON.stringify(simple_data), err=>console.error)
+    let setFinished
+    let finished = new Promise(res=>setFinished=res)
+    writeFile("synth_data/simple_data.json", JSON.stringify(simple_data), err=>{
+        if (err) throw err
+        setFinished()
+    })
+    await finished
 }
 
 await download_sources()
