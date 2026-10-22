@@ -41,7 +41,7 @@ export async function get_location_or_ask(){
     }
     let rl = readline.createInterface(process.stdin, process.stdout)
     if (SUPPORTED_PLATFORMS.includes(process.platform)) {
-        let res = await rl.question("this platform is supported for automatic location discovery, would you like to let the program gte your device's location? (Y/n): ")
+        let res = await rl.question("this platform is supported for automatic location discovery, would you like to let the program get your device's location? (Y/n): ")
         if (res.length === 0 || res[0].toLowerCase() === "y") {
             rl.close()
             try {
