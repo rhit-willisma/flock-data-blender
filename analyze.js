@@ -109,8 +109,8 @@ async function get_count(cam_data, location, radius = 5){
         return deg/180 * PI 
     }
 
-    const target_lat = location.lat
-    const target_lon = -location.lon // longitude must be positive
+    const target_lat = deg_to_rad(location.lat)
+    const target_lon = deg_to_rad(-location.lon) // longitude must be positive
     const check_radius = radius
 
     let count = 0
