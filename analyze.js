@@ -338,7 +338,7 @@ console.log("getting camera counts at different radii")
 let count_table = []
 const gps_location = await get_location_or_ask()
 for (let i = 5, j = 0; i <= 25; i+=5, j++){
-    count_table[j] = [i, get_count(cam_data, gps_location, i)]
+    count_table[j] = [i, await get_count(cam_data, gps_location, i)]
 }
 
 console.info("writing table")
