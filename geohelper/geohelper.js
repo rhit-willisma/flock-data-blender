@@ -30,7 +30,7 @@ export async function get_location(){
 }
 
 export async function get_location_or_ask(){
-    console.log(process.env)
+    // console.log(process.env)
     if (!process.env.hasOwnProperty("LOCATION_DEFER")){ // defer to env if setting is unset
         if (process.env.hasOwnProperty("LAT") && process.env.hasOwnProperty("LON")) {
             return {
