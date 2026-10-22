@@ -30,11 +30,12 @@ export async function get_location(){
 }
 
 export async function get_location_or_ask(){
-    if (process.env.hasOwnProperty("LOCATION_DEFER")){ // defer to env if setting is unset
-        if (process.env.LAT && process.env.LON) {
+    console.log(process.env)
+    if (!process.env.hasOwnProperty("LOCATION_DEFER")){ // defer to env if setting is unset
+        if (process.env.hasOwnProperty("LAT") && process.env.hasOwnProperty("LON")) {
             return {
-                lat: process.env.LAT,
-                lon: process.env.LON
+                lat: +process.env.LAT,
+                lon: +process.env.LON
             }
         }
     }
